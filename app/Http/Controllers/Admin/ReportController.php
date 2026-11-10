@@ -37,7 +37,7 @@ class ReportController extends Controller
         }
 
         $reports = $query->paginate(15)->withQueryString();
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::ordered()->get();
 
         return view('admin.reports.index', [
             'reports' => $reports,
@@ -54,7 +54,7 @@ class ReportController extends Controller
     public function show(string $code): View
     {
         $report = Report::with('category')->where('code', $code)->firstOrFail();
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::ordered()->get();
         $allowedTransitions = $report->allowedStatusTransitions();
 
         return view('admin.reports.show', compact('report', 'categories', 'allowedTransitions'));

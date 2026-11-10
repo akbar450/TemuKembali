@@ -20,7 +20,7 @@ class ReportController extends Controller
             ->take(6)
             ->get();
 
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::ordered()->get();
 
         return view('publik.home', compact('latestReports', 'categories'));
     }
@@ -53,7 +53,7 @@ class ReportController extends Controller
         }
 
         $reports = $query->paginate(10)->withQueryString();
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::ordered()->get();
 
         return view('publik.index', [
             'reports' => $reports,
@@ -69,7 +69,7 @@ class ReportController extends Controller
      */
     public function create(Request $request): View
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::ordered()->get();
         $defaultType = in_array($request->query('type'), ['lost', 'found']) ? $request->query('type') : 'lost';
 
         return view('publik.create', compact('categories', 'defaultType'));
