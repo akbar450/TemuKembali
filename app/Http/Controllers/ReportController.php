@@ -13,16 +13,20 @@ class ReportController extends Controller
     /**
      * Tampilan Beranda
      */
-    public function home(): View
+    public function home(Request $request): View
     {
-        $latestReports = Report::with('category')
-            ->latest()
-            ->take(6)
-            ->get();
+        $query = Report::with('category')->latest();
 
+        // Filter kategori jika pengunjung memilih chip di beranda
+        if ($request->filled('kategori')) {
+            $query->where('category_id', $request->input('kategori'));
+        }
+
+        $latestReports = $query->take(6)->get();
         $categories = Category::ordered()->get();
+        $activeCategory = $request->input('kategori');
 
-        return view('publik.home', compact('latestReports', 'categories'));
+        return view('publik.home', compact('latestReports', 'categories', 'activeCategory'));
     }
 
     /**

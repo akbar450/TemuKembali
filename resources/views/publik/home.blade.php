@@ -16,22 +16,34 @@
                    style="min-height: 52px; font-size: 16px;">
         </form>
 
-        <x-chip-kategori :categories="$categories" />
+        <x-chip-kategori :categories="$categories" :activeCategory="$activeCategory" />
     </section>
 
     <section class="mb-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="mb-0">Baru dilaporkan</h2>
-            <a href="{{ route('report.index') }}" class="fw-semibold" style="font-size: 15px;">Lihat semua</a>
+            @if ($activeCategory)
+                @php
+                    $selectedCat = $categories->firstWhere('id', $activeCategory);
+                @endphp
+                <h2 class="mb-0">{{ $selectedCat ? $selectedCat->name : 'Laporan' }}</h2>
+            @else
+                <h2 class="mb-0">Baru dilaporkan</h2>
+            @endif
+            <a href="{{ route('report.index', ['kategori' => $activeCategory]) }}" class="fw-semibold" style="font-size: 15px;">Lihat semua</a>
         </div>
 
         @if ($latestReports->isEmpty())
             <div class="text-center py-4" style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag);">
-                <p class="mb-3" style="color: var(--tinta-redup);">Belum ada laporan.</p>
-                <div class="d-flex justify-content-center gap-2">
-                    <a href="{{ route('report.create', ['type' => 'lost']) }}" class="btn btn-header-lapor btn-header-lapor--hilang" style="min-height: 44px; padding: 0 16px;">Saya kehilangan</a>
-                    <a href="{{ route('report.create', ['type' => 'found']) }}" class="btn btn-header-lapor btn-header-lapor--ditemukan" style="min-height: 44px; padding: 0 16px;">Saya menemukan</a>
-                </div>
+                @if ($activeCategory)
+                    <p class="mb-3" style="color: var(--tinta-redup);">Belum ada laporan untuk kategori ini.</p>
+                    <a href="{{ route('home') }}" class="btn btn-tk-sekunder">Tampilkan semua</a>
+                @else
+                    <p class="mb-3" style="color: var(--tinta-redup);">Belum ada laporan.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{{ route('report.create', ['type' => 'lost']) }}" class="btn btn-header-lapor btn-header-lapor--hilang" style="min-height: 44px; padding: 0 16px;">Saya kehilangan</a>
+                        <a href="{{ route('report.create', ['type' => 'found']) }}" class="btn btn-header-lapor btn-header-lapor--ditemukan" style="min-height: 44px; padding: 0 16px;">Saya menemukan</a>
+                    </div>
+                @endif
             </div>
         @else
             <div class="tag-grid mb-3">
@@ -40,8 +52,8 @@
                 @endforeach
             </div>
 
-            <a href="{{ route('report.index') }}" class="btn btn-tk-sekunder w-100">
-                Lihat semua laporan
+            <a href="{{ route('report.index', ['kategori' => $activeCategory]) }}" class="btn btn-tk-sekunder w-100">
+                Lihat semua laporan {{ $activeCategory ? '(' . ($categories->firstWhere('id', $activeCategory)?->name ?? '') . ')' : '' }}
             </a>
         @endif
     </section>

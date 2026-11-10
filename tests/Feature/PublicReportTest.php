@@ -45,6 +45,49 @@ class PublicReportTest extends TestCase
         $response->assertDontSee('081234567890');
     }
 
+    public function test_pengunjung_dapat_memfilter_kategori_di_beranda(): void
+    {
+        $catKunci = Category::create(['name' => 'Kunci']);
+
+        Report::create([
+            'code' => 'TK-LAPTOP',
+            'type' => 'lost',
+            'status' => 'hilang',
+            'item_name' => 'Laptop Lenovo ThinkPad',
+            'category_id' => $this->category->id,
+            'description' => 'Laptop warna hitam ada stiker github',
+            'location' => 'Perpustakaan lantai 2',
+            'event_date' => now()->format('Y-m-d'),
+            'reporter_name' => 'Rahasia Pelapor',
+            'reporter_contact' => '081234567890',
+        ]);
+
+        Report::create([
+            'code' => 'TK-KUNCI',
+            'type' => 'found',
+            'status' => 'ditemukan',
+            'item_name' => 'Kunci Motor Honda',
+            'category_id' => $catKunci->id,
+            'description' => 'Kunci motor warna hitam gantungan merah',
+            'location' => 'Parkiran Depan',
+            'event_date' => now()->format('Y-m-d'),
+            'reporter_name' => 'Penemu Kunci',
+            'reporter_contact' => '081234567899',
+        ]);
+
+        // Akses beranda dengan filter kategori Elektronik
+        $responseElektronik = $this->get(route('home', ['kategori' => $this->category->id]));
+        $responseElektronik->assertStatus(200);
+        $responseElektronik->assertSee('Laptop Lenovo ThinkPad');
+        $responseElektronik->assertDontSee('Kunci Motor Honda');
+
+        // Akses beranda dengan filter kategori Kunci
+        $responseKunci = $this->get(route('home', ['kategori' => $catKunci->id]));
+        $responseKunci->assertStatus(200);
+        $responseKunci->assertSee('Kunci Motor Honda');
+        $responseKunci->assertDontSee('Laptop Lenovo ThinkPad');
+    }
+
     public function test_pengunjung_dapat_mencari_dan_memfilter_laporan(): void
     {
         $catKunci = Category::create(['name' => 'Kunci']);

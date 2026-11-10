@@ -171,6 +171,17 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="secret_note" class="form-label">Ciri rahasia / verifikasi <span class="wajib">(hanya admin)</span></label>
+                    <textarea id="secret_note" 
+                              name="secret_note" 
+                              class="form-control @error('secret_note') is-invalid @enderror" 
+                              rows="2">{{ old('secret_note', $report->secret_note) }}</textarea>
+                    @error('secret_note')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="location" class="form-label">Lokasi <span class="wajib">(wajib)</span></label>
                     <input type="text" 
                            id="location" 
