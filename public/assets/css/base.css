@@ -1,0 +1,237 @@
+/* Base CSS — TemuKembali */
+
+a {
+  color: var(--biru);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--biru-tua);
+}
+
+/* Tombol (Section 5.2) */
+.btn-tk,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  font-family: var(--font-isi);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--r-kontrol);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  box-shadow: none !important;
+  text-align: center;
+}
+
+.btn-tk-utama,
+.btn-primary {
+  background-color: var(--biru) !important;
+  color: var(--kartu) !important;
+  border-color: var(--biru) !important;
+}
+
+.btn-tk-utama:hover,
+.btn-primary:hover {
+  background-color: var(--biru-tua) !important;
+  border-color: var(--biru-tua) !important;
+  color: var(--kartu) !important;
+}
+
+.btn-tk-utama:active,
+.btn-primary:active {
+  background-color: var(--biru-tua) !important;
+  transform: translateY(1px);
+}
+
+.btn-tk-sekunder,
+.btn-secondary,
+.btn-outline-primary {
+  background-color: transparent !important;
+  color: var(--biru) !important;
+  border: 1.5px solid var(--biru) !important;
+}
+
+.btn-tk-sekunder:hover,
+.btn-secondary:hover,
+.btn-outline-primary:hover {
+  background-color: rgba(42, 111, 134, 0.08) !important;
+  color: var(--biru-tua) !important;
+  border-color: var(--biru-tua) !important;
+}
+
+.btn-tk-bahaya,
+.btn-danger {
+  background-color: var(--bahaya) !important;
+  color: var(--kartu) !important;
+  border-color: var(--bahaya) !important;
+}
+
+.btn-tk-bahaya:hover,
+.btn-danger:hover {
+  background-color: #962820 !important;
+  border-color: #962820 !important;
+  color: var(--kartu) !important;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* Form & Input (Section 5.5) */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--tinta);
+  margin-bottom: 6px;
+}
+
+.form-label .wajib {
+  font-weight: 400;
+  color: var(--tinta-redup);
+  font-size: 14px;
+}
+
+.form-control,
+.form-select {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  font-family: var(--font-isi);
+  font-size: 16px; /* minimal 16px agar tidak auto-zoom di iOS */
+  line-height: 1.5;
+  color: var(--tinta);
+  background-color: var(--kartu);
+  border: 1.5px solid var(--garis-tegas);
+  border-radius: var(--r-kontrol);
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+
+textarea.form-control {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--biru) !important;
+  outline: 3px solid var(--biru) !important;
+  outline-offset: 2px !important;
+  background-color: var(--kartu);
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--bahaya) !important;
+}
+
+.invalid-feedback {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--bahaya);
+  font-weight: 600;
+}
+
+.form-keterangan {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--tinta-redup);
+}
+
+/* Kolom Honeypot Tersembunyi */
+.hp-field {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Notifikasi Layar (Section 5.8) */
+.notifikasi {
+  background-color: var(--kartu);
+  border: 1px solid var(--garis);
+  border-left: 4px solid var(--biru);
+  padding: 14px 16px;
+  border-radius: var(--r-tag);
+  margin-bottom: 24px;
+  color: var(--tinta);
+  font-size: 15px;
+}
+
+.notifikasi--sukses {
+  border-left-color: var(--tag-ditemukan);
+}
+
+.notifikasi--error {
+  border-left-color: var(--bahaya);
+  color: var(--bahaya);
+}
+
+/* Tabel Admin (Section 6.7) */
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid var(--garis);
+  border-radius: var(--r-tag);
+  background-color: var(--kartu);
+}
+
+.table-admin {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.table-admin th {
+  background-color: var(--kertas);
+  color: var(--tinta);
+  font-weight: 700;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--garis);
+}
+
+.table-admin td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--garis);
+  color: var(--tinta);
+  vertical-align: middle;
+}
+
+.table-admin tr:last-child td {
+  border-bottom: none;
+}
+
+.table-admin tr:hover td {
+  background-color: rgba(42, 111, 134, 0.04);
+}
+
+/* Kode Laporan Tabular */
+.kode-laporan {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
