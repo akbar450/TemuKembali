@@ -21,7 +21,7 @@
                        placeholder="Cari kode, nama barang, atau nama pelapor...">
             </div>
             <div class="col-6 col-md-3">
-                <select name="kategori" class="form-select" onchange="this.form.submit()">
+                <select name="kategori" class="form-select">
                     <option value="">Semua kategori</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ (string)$activeCategory === (string)$cat->id ? 'selected' : '' }}>
@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="col-6 col-md-2">
-                <select name="status" class="form-select" onchange="this.form.submit()">
+                <select name="status" class="form-select">
                     <option value="">Semua status</option>
                     <option value="hilang" {{ $activeStatus === 'hilang' ? 'selected' : '' }}>Hilang</option>
                     <option value="ditemukan" {{ $activeStatus === 'ditemukan' ? 'selected' : '' }}>Ditemukan</option>
