@@ -61,11 +61,13 @@ class AdminTest extends TestCase
     {
         $report = Report::create([
             'code' => 'TK-ADMIN1',
+            'claim_pin' => '7412',
             'type' => 'lost',
             'status' => 'hilang',
             'item_name' => 'Tablet iPad Mini',
             'category_id' => $this->category->id,
             'description' => 'iPad warna abu-abu ada case biru',
+            'secret_note' => 'Ada stiker apel digigit di sudut kanan bawah',
             'location' => 'Gedung Rektorat Lt 3',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Dosen Pembimbing',
@@ -77,6 +79,8 @@ class AdminTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Dosen Pembimbing');
         $response->assertSee('081122334455');
+        $response->assertSee('7412');
+        $response->assertSee('stiker apel digigit');
     }
 
     public function test_admin_dapat_mengubah_status_dari_hilang_ke_ditemukan(): void

@@ -10,11 +10,13 @@ class Report extends Model
 {
     protected $fillable = [
         'code',
+        'claim_pin',
         'type',
         'status',
         'item_name',
         'category_id',
         'description',
+        'secret_note',
         'location',
         'event_date',
         'reporter_name',
@@ -43,6 +45,11 @@ class Report extends Model
         } while (static::where('code', $code)->exists());
 
         return $code;
+    }
+
+    public static function generateClaimPin(): string
+    {
+        return sprintf('%04d', random_int(1000, 9999));
     }
 
     public function allowedStatusTransitions(): array

@@ -90,6 +90,7 @@ class ReportController extends Controller
             'item_name' => ['required', 'string', 'min:3', 'max:100'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['required', 'string', 'min:10'],
+            'secret_note' => ['nullable', 'string', 'max:500'],
             'location' => ['required', 'string', 'max:255'],
             'event_date' => ['required', 'date', 'before_or_equal:today'],
             'reporter_name' => ['required', 'string', 'max:100'],
@@ -104,6 +105,7 @@ class ReportController extends Controller
             'category_id.exists' => 'Kategori yang dipilih tidak terdaftar.',
             'description.required' => 'Ciri-ciri barang harus diisi.',
             'description.min' => 'Ciri-ciri barang minimal 10 karakter.',
+            'secret_note.max' => 'Ciri khusus rahasia maksimal 500 karakter.',
             'location.required' => 'Lokasi kejadian atau temuan harus diisi.',
             'event_date.required' => 'Tanggal kejadian harus diisi.',
             'event_date.before_or_equal' => 'Tanggal tidak boleh setelah hari ini. Pilih hari ini atau sebelumnya.',
@@ -113,14 +115,17 @@ class ReportController extends Controller
 
         $status = $validated['type'] === 'lost' ? 'hilang' : 'ditemukan';
         $code = Report::generateUniqueCode();
+        $claimPin = Report::generateClaimPin();
 
         $report = Report::create([
             'code' => $code,
+            'claim_pin' => $claimPin,
             'type' => $validated['type'],
             'status' => $status,
             'item_name' => $validated['item_name'],
             'category_id' => $validated['category_id'],
             'description' => $validated['description'],
+            'secret_note' => $validated['secret_note'] ?? null,
             'location' => $validated['location'],
             'event_date' => $validated['event_date'],
             'reporter_name' => $validated['reporter_name'],

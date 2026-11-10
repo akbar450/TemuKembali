@@ -105,6 +105,7 @@ class ReportController extends Controller
             'item_name' => ['required', 'string', 'min:3', 'max:100'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['required', 'string', 'min:10'],
+            'secret_note' => ['nullable', 'string', 'max:500'],
             'location' => ['required', 'string', 'max:255'],
             'event_date' => ['required', 'date', 'before_or_equal:today'],
             'reporter_name' => ['required', 'string', 'max:100'],

@@ -98,11 +98,13 @@ class PublicReportTest extends TestCase
     {
         $report = Report::create([
             'code' => 'TK-DETAIL',
+            'claim_pin' => '9876',
             'type' => 'lost',
             'status' => 'hilang',
             'item_name' => 'Flashdisk Sandisk 64GB',
             'category_id' => $this->category->id,
             'description' => 'Flashdisk merah ada gantungan tali hitam',
+            'secret_note' => 'Ada file skripsi_final_banget.docx di root folder',
             'location' => 'Lab Komputer 1',
             'event_date' => now()->subDays(1)->format('Y-m-d'),
             'reporter_name' => 'Nama Sangat Rahasia',
@@ -117,9 +119,11 @@ class PublicReportTest extends TestCase
         $response->assertSee('Petunjuk pengambilan barang');
         $response->assertSee('TK-DETAIL');
 
-        // Uji Privasi: nama dan kontak TIDAK boleh ada di halaman detail publik
+        // Uji Privasi: nama, kontak, PIN, dan ciri rahasia TIDAK boleh ada di halaman detail publik
         $response->assertDontSee('Nama Sangat Rahasia');
         $response->assertDontSee('089999999999');
+        $response->assertDontSee('9876');
+        $response->assertDontSee('skripsi_final_banget.docx');
     }
 
     public function test_pengunjung_dapat_membuat_laporan_kehilangan(): void

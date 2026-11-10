@@ -96,11 +96,30 @@
                               name="description" 
                               class="form-control @error('description') is-invalid @enderror" 
                               rows="4" 
-                              placeholder="Warna, merk, isi di dalamnya, stiker, atau goresan khas" 
+                              placeholder="Warna, merk, tipe, atau ciri umum yang aman dilihat publik" 
                               required 
                               aria-describedby="@error('description') description-error @enderror">{{ old('description') }}</textarea>
                     @error('description')
                         <div id="description-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- Ciri Khusus Rahasia untuk Verifikasi Kepemilikan (Anti Manipulasi & Klaim Palsu) --}}
+                <div class="form-group">
+                    <label for="secret_note" class="form-label">
+                        Ciri rahasia / verifikasi <span class="wajib">(rahasia untuk petugas)</span>
+                    </label>
+                    <textarea id="secret_note" 
+                              name="secret_note" 
+                              class="form-control @error('secret_note') is-invalid @enderror" 
+                              rows="2" 
+                              placeholder="Contoh: Isi uang dalam dompet, stiker di balik casing, goresan khas, atau nomor seri/IMEI" 
+                              aria-describedby="secret-note-desc @error('secret_note') secret_note-error @enderror">{{ old('secret_note') }}</textarea>
+                    <span id="secret-note-desc" class="form-keterangan">
+                        🔒 <strong>Rahasia:</strong> Hanya dilihat oleh petugas kampus untuk menguji kecocokan saat pengambilan barang. Tidak ditampilkan di website.
+                    </span>
+                    @error('secret_note')
+                        <div id="secret_note-error" class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
                 </div>
 

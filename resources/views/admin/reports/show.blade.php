@@ -35,8 +35,16 @@
 
         {{-- Bagian Pelapor (Hanya Terlihat Oleh Admin Sesuai PRD) --}}
         <div style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag); padding: 18px 20px; margin-bottom: 24px;">
-            <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Informasi pelapor</h2>
+            <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Informasi pelapor & verifikasi</h2>
             <div class="tanda-terima-list p-0 border-0 mb-0">
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">PIN Verifikasi (Anti-Klaim Palsu)</span>
+                    <span class="tanda-terima-value">
+                        <span class="kode-laporan" style="font-size: 1.15rem; color: var(--biru); background: rgba(42, 111, 134, 0.08); padding: 2px 8px; border-radius: 4px;">
+                            {{ $report->claim_pin ?? 'Belum ada PIN' }}
+                        </span>
+                    </span>
+                </div>
                 <div class="tanda-terima-row">
                     <span class="tanda-terima-label">Nama pelapor</span>
                     <span class="tanda-terima-value">{{ $report->reporter_name }}</span>
@@ -66,6 +74,17 @@
                     </div>
                 @endif
             </div>
+
+            @if ($report->secret_note)
+                <div class="mt-3 p-3" style="background: rgba(242, 178, 76, 0.12); border: 1.5px dashed var(--tag-hilang); border-radius: var(--r-kontrol);">
+                    <div style="font-weight: 700; font-size: 13px; color: var(--tinta); margin-bottom: 4px;">
+                        🔍 Ciri Rahasia untuk Uji Kepemilikan (Tidak Terlihat di Web Publik):
+                    </div>
+                    <div style="font-size: 14px; color: var(--tinta); line-height: 1.5;">
+                        {{ $report->secret_note }}
+                    </div>
+                </div>
+            @endif
         </div>
 
         {{-- Bagian Ubah Status (PRD Section 6) --}}
