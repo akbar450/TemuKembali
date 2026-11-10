@@ -19,3 +19,4 @@ php artisan view:cache
 # Jalankan Apache web server
 echo "Memulai server Apache pada port ${PORT}..."
 exec apache2-foreground
+

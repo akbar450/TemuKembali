@@ -31,3 +31,4 @@ services:
         sync: false
       - key: CAMPUS_POST_LOCATION
         value: "Pos Satpam Utama Gedung Rektorat Kampus"
+

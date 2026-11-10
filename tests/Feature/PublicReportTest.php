@@ -214,3 +214,4 @@ class PublicReportTest extends TestCase
         ]);
     }
 }
+

@@ -152,3 +152,4 @@ class ReportController extends Controller
         return view('publik.success', compact('report'));
     }
 }
+

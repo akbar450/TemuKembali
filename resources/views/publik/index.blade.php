@@ -85,3 +85,4 @@
 @section('bottom_bar')
     <x-bar-aksi-bawah />
 @endsection
+

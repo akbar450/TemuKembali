@@ -40,3 +40,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 CMD ["/var/www/html/docker/run.sh"]
+

@@ -136,3 +136,4 @@ class ReportController extends Controller
             ->with('sukses', 'Laporan dihapus.');
     }
 }
+

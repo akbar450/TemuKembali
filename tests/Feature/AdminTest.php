@@ -237,3 +237,4 @@ class AdminTest extends TestCase
         $this->assertGuest();
     }
 }
+

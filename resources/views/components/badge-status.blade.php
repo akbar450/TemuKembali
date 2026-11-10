@@ -10,3 +10,4 @@
 @endphp
 
 <span class="badge-status badge-status--{{ $status }}">{{ $text }}</span>
+

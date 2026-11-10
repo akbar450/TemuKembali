@@ -24,3 +24,4 @@
         <span class="tag__date">{{ $formattedDate }}</span>
     </div>
 </a>
+

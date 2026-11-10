@@ -100,3 +100,4 @@ Kontainer Docker akan secara otomatis:
 2. **Uji Lapor Publik:** Buat satu laporan kehilangan dan temuan, pastikan halaman sukses memunculkan kode tiket berayun dan kode dapat disalin.
 3. **Uji Privasi:** Buka laporan publik pada `/laporan/{kode}`, pastikan nama dan kontak pelapor tidak terlihat.
 4. **Uji Login Admin:** Masuk ke `/admin/login` dengan email `admin@kampus.ac.id` dan password yang telah diset, kelola status laporan menjadi "ditemukan" lalu "dikembalikan".
+
