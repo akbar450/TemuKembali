@@ -14,7 +14,7 @@ Dokumen ini menjelaskan arsitektur komputasi awan, konfigurasi database terkelol
          │ (Reverse Proxy & Health Check /up)
          ▼
 [ Docker Web Service Container (Render) ]
-  ├── Linux + PHP 8.3 Apache + OPcache
+  ├── Linux + PHP 8.4 Apache + OPcache
   ├── Monolith Laravel 11 (Blade + Bootstrap 5 kustom)
   └── Zona Waktu: Asia/Makassar (WITA)
          │ (SSL / Port 5432)

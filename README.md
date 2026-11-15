@@ -56,7 +56,7 @@
                     ▼ (Reverse Proxy & Port Forwarding)
        [ Render Web Service (Docker Container) ]
        ├── OS: Debian Linux Slim
-       ├── Runtime: PHP 8.3 Apache + OPcache
+       ├── Runtime: PHP 8.4 Apache + OPcache
        ├── App: Laravel 11 Monolith (Blade + Bootstrap 5 kustom)
        └── Zona Waktu: Asia/Makassar (WITA)
                     │
@@ -182,7 +182,7 @@ temu_kembali/
 │   ├── errors/                             # Tampilan error 403, 404, 419, 500
 │   ├── layouts/                            # publik.blade.php & admin.blade.php
 │   └── publik/                             # home, index, create, show, success
-├── Dockerfile                              # Kontainer Apache PHP 8.3 untuk Render
+├── Dockerfile                              # Kontainer Apache PHP 8.4 untuk Render
 ├── render.yaml                             # Blueprint Infrastructure-as-Code Render
 ├── DEPLOYMENT.md                           # Dokumentasi arsitektur cloud & estimasi biaya
 ├── Design.md                               # Panduan sistem desain antarmuka
