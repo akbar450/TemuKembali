@@ -86,6 +86,13 @@ class PublicReportTest extends TestCase
         $responseKunci->assertStatus(200);
         $responseKunci->assertSee('Kunci Motor Honda');
         $responseKunci->assertDontSee('Laptop Lenovo ThinkPad');
+
+        // Akses beranda dengan kategori yang belum memiliki laporan
+        $catKosong = Category::create(['name' => 'Alat Tulis & Buku']);
+        $responseKosong = $this->get(route('home', ['kategori' => $catKosong->id]));
+        $responseKosong->assertStatus(200);
+        $responseKosong->assertSee('Belum ada laporan untuk kategori ini.');
+        $responseKosong->assertSee('Tampilkan semua');
     }
 
     public function test_pengunjung_dapat_mencari_dan_memfilter_laporan(): void
@@ -151,6 +158,8 @@ class PublicReportTest extends TestCase
             'location' => 'Lab Komputer 1',
             'event_date' => now()->subDays(1)->format('Y-m-d'),
             'reporter_name' => 'Nama Sangat Rahasia',
+            'reporter_role' => 'mahasiswa',
+            'reporter_id_number' => '2201010099',
             'reporter_contact' => '089999999999',
         ]);
 
@@ -162,8 +171,9 @@ class PublicReportTest extends TestCase
         $response->assertSee('Petunjuk pengambilan barang');
         $response->assertSee('TK-DETAIL');
 
-        // Uji Privasi: nama, kontak, PIN, dan ciri rahasia TIDAK boleh ada di halaman detail publik
+        // Uji Privasi: nama, peran, NIM/NIK, kontak, PIN, dan ciri rahasia TIDAK boleh ada di halaman detail publik
         $response->assertDontSee('Nama Sangat Rahasia');
+        $response->assertDontSee('2201010099');
         $response->assertDontSee('089999999999');
         $response->assertDontSee('9876');
         $response->assertDontSee('skripsi_final_banget.docx');
@@ -179,6 +189,8 @@ class PublicReportTest extends TestCase
             'location' => 'Ruang Baca Perpustakaan',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Ahmad Fauzi',
+            'reporter_role' => 'mahasiswa',
+            'reporter_id_number' => '2201010055',
             'reporter_contact' => '081234567891',
         ];
 
@@ -187,6 +199,8 @@ class PublicReportTest extends TestCase
         $report = Report::where('item_name', 'Headphone Sony Hitam')->first();
         $this->assertNotNull($report);
         $this->assertEquals('hilang', $report->status);
+        $this->assertEquals('mahasiswa', $report->reporter_role);
+        $this->assertEquals('2201010055', $report->reporter_id_number);
         $this->assertStringStartsWith('TK-', $report->code);
 
         $response->assertRedirect(route('report.success', $report->code));
@@ -202,6 +216,8 @@ class PublicReportTest extends TestCase
             'location' => 'Meja kantin gedung C',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Petugas Kantin',
+            'reporter_role' => 'staf',
+            'reporter_id_number' => '198501012010121002',
             'reporter_contact' => 'kantin@campus.ac.id',
         ];
 
@@ -210,6 +226,8 @@ class PublicReportTest extends TestCase
         $report = Report::where('item_name', 'Kartu Tanda Mahasiswa (KTM)')->first();
         $this->assertNotNull($report);
         $this->assertEquals('ditemukan', $report->status);
+        $this->assertEquals('staf', $report->reporter_role);
+        $this->assertEquals('198501012010121002', $report->reporter_id_number);
 
         $response->assertRedirect(route('report.success', $report->code));
     }
@@ -225,6 +243,8 @@ class PublicReportTest extends TestCase
             'location' => 'Internet',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Spambot',
+            'reporter_role' => 'tamu',
+            'reporter_id_number' => '123456789',
             'reporter_contact' => 'spam@bot.com',
         ];
 
@@ -244,6 +264,8 @@ class PublicReportTest extends TestCase
             'location' => '',
             'event_date' => now()->addDays(2)->format('Y-m-d'), // masa depan (tidak boleh)
             'reporter_name' => '',
+            'reporter_role' => 'alien', // bukan mahasiswa/dosen/staf/tamu
+            'reporter_id_number' => '',
             'reporter_contact' => '',
         ];
 
@@ -257,6 +279,8 @@ class PublicReportTest extends TestCase
             'location',
             'event_date',
             'reporter_name',
+            'reporter_role',
+            'reporter_id_number',
             'reporter_contact',
         ]);
     }

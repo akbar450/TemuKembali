@@ -178,7 +178,49 @@
                     @enderror
                 </div>
 
-                {{-- 8. Kontak Pelapor --}}
+                {{-- 8. Peran / Status di Kampus --}}
+                <div class="form-group">
+                    <label for="reporter_role" class="form-label">
+                        Sebagai siapa Anda melapor? <span class="wajib">(wajib)</span>
+                    </label>
+                    <select id="reporter_role" 
+                            name="reporter_role" 
+                            class="form-select @error('reporter_role') is-invalid @enderror" 
+                            required 
+                            aria-describedby="@error('reporter_role') reporter_role-error @enderror">
+                        <option value="">Pilih peran Anda...</option>
+                        <option value="mahasiswa" {{ old('reporter_role') === 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                        <option value="dosen" {{ old('reporter_role') === 'dosen' ? 'selected' : '' }}>Dosen</option>
+                        <option value="staf" {{ old('reporter_role') === 'staf' ? 'selected' : '' }}>Staf</option>
+                        <option value="tamu" {{ old('reporter_role') === 'tamu' ? 'selected' : '' }}>Tamu</option>
+                    </select>
+                    @error('reporter_role')
+                        <div id="reporter_role-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- 9. NIM / NIK --}}
+                <div class="form-group">
+                    <label for="reporter_id_number" class="form-label">
+                        NIM / NIK <span class="wajib">(wajib)</span>
+                    </label>
+                    <input type="text" 
+                           id="reporter_id_number" 
+                           name="reporter_id_number" 
+                           value="{{ old('reporter_id_number') }}" 
+                           class="form-control @error('reporter_id_number') is-invalid @enderror" 
+                           placeholder="NIM untuk Mahasiswa, atau NIK/NIP untuk Dosen, Staf, Tamu" 
+                           required 
+                           aria-describedby="id-number-note @error('reporter_id_number') reporter_id_number-error @enderror">
+                    <span id="id-number-note" class="form-keterangan">
+                        🔒 Identitas Anda hanya dilihat petugas pos kampus untuk validasi, tidak ditampilkan di website.
+                    </span>
+                    @error('reporter_id_number')
+                        <div id="reporter_id_number-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- 10. Kontak Pelapor --}}
                 <div class="form-group mb-4">
                     <label for="reporter_contact" class="form-label">
                         Kontak Anda <span class="wajib">(wajib)</span>

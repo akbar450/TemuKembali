@@ -55,6 +55,8 @@ class DatabaseSeeder extends Seeder
                 'location' => 'Perpustakaan lantai 2',
                 'event_date' => now()->subDays(2)->format('Y-m-d'),
                 'reporter_name' => 'Budi Santoso',
+                'reporter_role' => 'mahasiswa',
+                'reporter_id_number' => '220101045',
                 'reporter_contact' => '081234567890',
             ]);
 
@@ -68,6 +70,8 @@ class DatabaseSeeder extends Seeder
                 'location' => 'Parkiran Gedung Kuliah Bersama',
                 'event_date' => now()->subDay()->format('Y-m-d'),
                 'reporter_name' => 'Siti Rahma',
+                'reporter_role' => 'mahasiswa',
+                'reporter_id_number' => '230101112',
                 'reporter_contact' => 'siti.rahma@mahasiswa.ac.id',
             ]);
 
@@ -81,6 +85,8 @@ class DatabaseSeeder extends Seeder
                 'location' => 'Laboratorium Komputer 3',
                 'event_date' => now()->subDays(5)->format('Y-m-d'),
                 'reporter_name' => 'Rian Hidayat',
+                'reporter_role' => 'staf',
+                'reporter_id_number' => '199008152020121001',
                 'reporter_contact' => '089876543210',
                 'returned_at' => now()->subDays(1),
             ]);

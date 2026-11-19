@@ -71,6 +71,8 @@ class AdminTest extends TestCase
             'location' => 'Gedung Rektorat Lt 3',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Dosen Pembimbing',
+            'reporter_role' => 'dosen',
+            'reporter_id_number' => '197501012005011001',
             'reporter_contact' => '081122334455',
         ]);
 
@@ -78,6 +80,8 @@ class AdminTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Dosen Pembimbing');
+        $response->assertSee('Dosen');
+        $response->assertSee('197501012005011001');
         $response->assertSee('081122334455');
         $response->assertSee('7412');
         $response->assertSee('stiker apel digigit');
@@ -202,6 +206,8 @@ class AdminTest extends TestCase
             'location' => 'Lokasi Baru Diperbaiki',
             'event_date' => now()->format('Y-m-d'),
             'reporter_name' => 'Doni Pratama',
+            'reporter_role' => 'mahasiswa',
+            'reporter_id_number' => '2201010077',
             'reporter_contact' => '081234567899',
         ]);
 
@@ -209,6 +215,8 @@ class AdminTest extends TestCase
         $updated = $report->fresh();
         $this->assertEquals('Nama Barang Benar Setelah Diubah', $updated->item_name);
         $this->assertEquals('Lokasi Baru Diperbaiki', $updated->location);
+        $this->assertEquals('mahasiswa', $updated->reporter_role);
+        $this->assertEquals('2201010077', $updated->reporter_id_number);
     }
 
     public function test_admin_dapat_menghapus_laporan(): void

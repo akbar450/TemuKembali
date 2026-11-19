@@ -109,6 +109,8 @@ class ReportController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'event_date' => ['required', 'date', 'before_or_equal:today'],
             'reporter_name' => ['required', 'string', 'max:100'],
+            'reporter_role' => ['nullable', 'in:mahasiswa,dosen,staf,tamu'],
+            'reporter_id_number' => ['nullable', 'string', 'max:50'],
             'reporter_contact' => ['required', 'string', 'max:100'],
         ], [
             'item_name.required' => 'Nama barang harus diisi.',

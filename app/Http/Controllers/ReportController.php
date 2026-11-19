@@ -98,6 +98,8 @@ class ReportController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'event_date' => ['required', 'date', 'before_or_equal:today'],
             'reporter_name' => ['required', 'string', 'max:100'],
+            'reporter_role' => ['required', 'in:mahasiswa,dosen,staf,tamu'],
+            'reporter_id_number' => ['required', 'string', 'max:50'],
             'reporter_contact' => ['required', 'string', 'max:100'],
         ], [
             'type.required' => 'Pilih jenis laporan.',
@@ -114,6 +116,10 @@ class ReportController extends Controller
             'event_date.required' => 'Tanggal kejadian harus diisi.',
             'event_date.before_or_equal' => 'Tanggal tidak boleh setelah hari ini. Pilih hari ini atau sebelumnya.',
             'reporter_name.required' => 'Nama pelapor harus diisi.',
+            'reporter_role.required' => 'Pilih peran Anda (Mahasiswa, Dosen, Staf, atau Tamu).',
+            'reporter_role.in' => 'Pilihan peran tidak valid.',
+            'reporter_id_number.required' => 'NIM atau NIK harus diisi.',
+            'reporter_id_number.max' => 'NIM/NIK maksimal 50 karakter.',
             'reporter_contact.required' => 'Kontak pelapor harus diisi.',
         ]);
 
@@ -133,6 +139,8 @@ class ReportController extends Controller
             'location' => $validated['location'],
             'event_date' => $validated['event_date'],
             'reporter_name' => $validated['reporter_name'],
+            'reporter_role' => $validated['reporter_role'],
+            'reporter_id_number' => $validated['reporter_id_number'],
             'reporter_contact' => $validated['reporter_contact'],
         ]);
 

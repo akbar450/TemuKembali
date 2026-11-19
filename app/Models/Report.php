@@ -8,6 +8,13 @@ use Illuminate\Support\Str;
 
 class Report extends Model
 {
+    public const ROLES = [
+        'mahasiswa' => 'Mahasiswa',
+        'dosen' => 'Dosen',
+        'staf' => 'Staf',
+        'tamu' => 'Tamu',
+    ];
+
     protected $fillable = [
         'code',
         'claim_pin',
@@ -21,8 +28,15 @@ class Report extends Model
         'event_date',
         'reporter_name',
         'reporter_contact',
+        'reporter_role',
+        'reporter_id_number',
         'returned_at',
     ];
+
+    public function getReporterRoleLabelAttribute(): string
+    {
+        return self::ROLES[$this->reporter_role] ?? ($this->reporter_role ? ucfirst($this->reporter_role) : '-');
+    }
 
     protected function casts(): array
     {

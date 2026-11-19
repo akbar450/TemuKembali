@@ -50,6 +50,14 @@
                     <span class="tanda-terima-value">{{ $report->reporter_name }}</span>
                 </div>
                 <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Peran pelapor</span>
+                    <span class="tanda-terima-value">{{ $report->reporter_role_label }}</span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">NIM / NIK</span>
+                    <span class="tanda-terima-value">{{ $report->reporter_id_number ?? '-' }}</span>
+                </div>
+                <div class="tanda-terima-row">
                     <span class="tanda-terima-label">Kontak pelapor</span>
                     <span class="tanda-terima-value">
                         @if ($isEmail)
@@ -217,6 +225,35 @@
                            class="form-control @error('reporter_name') is-invalid @enderror" 
                            required>
                     @error('reporter_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="reporter_role" class="form-label">Peran pelapor</label>
+                    <select id="reporter_role" 
+                            name="reporter_role" 
+                            class="form-select @error('reporter_role') is-invalid @enderror">
+                        <option value="">Belum ditentukan</option>
+                        <option value="mahasiswa" {{ old('reporter_role', $report->reporter_role) === 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                        <option value="dosen" {{ old('reporter_role', $report->reporter_role) === 'dosen' ? 'selected' : '' }}>Dosen</option>
+                        <option value="staf" {{ old('reporter_role', $report->reporter_role) === 'staf' ? 'selected' : '' }}>Staf</option>
+                        <option value="tamu" {{ old('reporter_role', $report->reporter_role) === 'tamu' ? 'selected' : '' }}>Tamu</option>
+                    </select>
+                    @error('reporter_role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="reporter_id_number" class="form-label">NIM / NIK</label>
+                    <input type="text" 
+                           id="reporter_id_number" 
+                           name="reporter_id_number" 
+                           value="{{ old('reporter_id_number', $report->reporter_id_number) }}" 
+                           class="form-control @error('reporter_id_number') is-invalid @enderror" 
+                           placeholder="NIM atau NIK pelapor">
+                    @error('reporter_id_number')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
