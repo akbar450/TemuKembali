@@ -20,12 +20,12 @@
 ## 2. Fitur Utama
 
 ### 👥 Publik (Pengunjung Kampus — Tanpa Login)
-* **Pelaporan Cepat:** Form pelaporan satu kolom dengan pilihan "Saya kehilangan" atau "Saya menemukan", dilengkapi proteksi honeypot anti-spam (`telepon_kantor`) dan pembatasan laju (*rate limiting*).
+* **Pelaporan Cepat:** Form pelaporan satu kolom dengan pilihan "Saya kehilangan" atau "Saya menemukan", dilengkapi proteksi honeypot anti-spam (`telepon_kantor`), pembatasan laju (*rate limiting*), serta pencatatan identitas pelapor (Peran: Mahasiswa/Dosen/Staf/Tamu dan nomor identitas NIM/NIK).
 * **Kode Bukti Laporan & PIN Verifikasi:** Setiap laporan menghasilkan kode publik unik (contoh: `TK-4F7K2`) dan **PIN Verifikasi 4 digit** rahasia yang hanya diberikan kepada pembuat laporan untuk validasi fisik saat pengambilan barang di pos satpam.
 * **Ciri Rahasia / Verifikasi (`secret_note`):** Pelapor dapat menyertakan tanda pengenal tersembunyi (misal: isi dompet tersembunyi, goresan internal, wallpaper gawai) yang **tidak ditampilkan ke publik**, sehingga mencegah klaim palsu dan manipulasi oleh pihak yang tidak bertanggung jawab.
 * **Pencarian & Filter Cepat:** Cari nama barang atau ciri khas, filter chip kategori yang dapat digulir langsung di beranda dan halaman direktori, serta kontrol segmen status berpenanda warna. Urutan kategori selalu konsisten dengan menempatkan opsi *"Lainnya"* di posisi paling akhir.
 * **Tampilan Tag Tiket (Design System):** Kartu laporan bergaya label karcis pos barang hilang dengan stub warna status, garis putus-putus, dan takik robekan yang responsif (termasuk penyesuaian teks status panjang seperti *"Dikembalikan"* agar tetap rapi di dalam frame).
-* **Privasi Terjamin:** Nama, kontak pelapor, dan ciri rahasia tidak pernah ditampilkan di halaman publik; detail laporan menampilkan petunjuk pengambilan barang di pos satpam kampus.
+* **Privasi Terjamin:** Nama, peran pelapor, NIM/NIK, kontak, dan ciri rahasia tidak pernah ditampilkan di halaman publik; detail laporan hanya menampilkan petunjuk pengambilan barang di pos satpam kampus.
 
 ### 🛡️ Admin (Petugas Kampus)
 * **Login Khusus Petugas:** Akses panel aman di `/admin/login` tanpa registrasi publik, dilindungi pembatasan laju (*rate limiting* 5 percobaan/menit) terhadap serangan *brute force*.
@@ -131,14 +131,14 @@ php artisan test
 php vendor/phpunit/phpunit/phpunit
 ```
 
-**Cakupan Tes (21/21 Passed - 100%, 86 assertions):**
+**Cakupan Tes (21/21 Passed - 100%, 97 assertions):**
 - Hak akses tamu ke beranda, pencarian, filter kategori, filter beranda, dan filter status.
 - Pemfilteran chip kategori di beranda dengan pembaruan dinamis dan penanganan *empty state*.
-- Privasi data pelapor (nama, kontak, dan ciri rahasia) tidak bocor di halaman publik.
+- Privasi data pelapor (nama, peran, NIM/NIK, kontak, PIN, dan ciri rahasia) tidak bocor di halaman publik.
 - Validasi input & penolakan bot melalui spam honeypot (`telepon_kantor`).
 - Autentikasi admin, proteksi laju percobaan login (*rate limiting* anti-brute force), kegagalan login dengan pesan umum, dan proteksi middleware.
 - Validasi transisi status sesuai PRD dan penguncian status `dikembalikan`.
-- Pengubahan isi laporan, verifikasi PIN/ciri rahasia, dan penghapusan laporan oleh admin.
+- Pengubahan isi laporan, verifikasi identitas (peran & NIM/NIK), PIN/ciri rahasia, dan penghapusan laporan oleh admin.
 
 ---
 
