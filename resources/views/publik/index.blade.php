@@ -39,17 +39,17 @@
     </div>
 
     @if ($reports->isEmpty())
-        <div class="text-center py-5 my-3" style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag);">
+        <div class="d-flex align-items-center justify-content-center text-center py-5 my-3" style="min-height: 120px; background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag);">
             @if ($keyword || $activeCategory || $activeStatus)
-                <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Belum ada laporan yang cocok.</h2>
-                <p style="color: var(--tinta-redup); margin-bottom: 16px;">Coba kata lain atau pilih Semua.</p>
-                <a href="{{ route('report.index') }}" class="btn btn-tk-sekunder">Atur ulang filter</a>
+                <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0;">Belum ada laporan yang cocok.</h2>
             @else
-                <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Belum ada laporan.</h2>
-                <p style="color: var(--tinta-redup); margin-bottom: 16px;">Jadilah yang pertama melaporkan barang hilang atau temuan di kampus.</p>
-                <div class="d-flex justify-content-center gap-2">
-                    <a href="{{ route('report.create', ['type' => 'lost']) }}" class="btn btn-header-lapor btn-header-lapor--hilang" style="min-height: 44px; padding: 0 16px;">Saya kehilangan</a>
-                    <a href="{{ route('report.create', ['type' => 'found']) }}" class="btn btn-header-lapor btn-header-lapor--ditemukan" style="min-height: 44px; padding: 0 16px;">Saya menemukan</a>
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Belum ada laporan.</h2>
+                    <p style="color: var(--tinta-redup); margin-bottom: 16px;">Jadilah yang pertama melaporkan barang hilang atau temuan di kampus.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{{ route('report.create', ['type' => 'lost']) }}" class="btn btn-header-lapor btn-header-lapor--hilang" style="min-height: 44px; padding: 0 16px;">Saya kehilangan</a>
+                        <a href="{{ route('report.create', ['type' => 'found']) }}" class="btn btn-header-lapor btn-header-lapor--ditemukan" style="min-height: 44px; padding: 0 16px;">Saya menemukan</a>
+                    </div>
                 </div>
             @endif
         </div>
