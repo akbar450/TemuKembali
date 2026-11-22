@@ -13,10 +13,7 @@
 <body>
     <header class="tk-header">
         <div class="tk-container tk-header__inner">
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('admin.reports.index') }}" class="tk-brand">TemuKembali Admin</a>
-                <a href="{{ route('home') }}" target="_blank" class="text-decoration-none" style="font-size: 13px; color: var(--tinta-redup);">Buka website publik</a>
-            </div>
+            <a href="{{ route('admin.reports.index') }}" class="tk-brand">TemuKembali Admin</a>
             @auth
                 <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
                     @csrf
