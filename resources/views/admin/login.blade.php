@@ -25,21 +25,35 @@
                         <input type="email" 
                                id="email" 
                                name="email" 
-                               value="{{ old('email') }}" 
+                               value="{{ old('email', $rememberedEmail ?? '') }}" 
                                class="form-control @error('email') is-invalid @enderror" 
                                required 
-                               autofocus 
+                               {{ empty($rememberedEmail) ? 'autofocus' : '' }} 
                                autocomplete="username">
                     </div>
 
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" 
                                id="password" 
                                name="password" 
                                class="form-control" 
                                required 
+                               {{ !empty($rememberedEmail) ? 'autofocus' : '' }} 
                                autocomplete="current-password">
+                    </div>
+
+                    <div class="form-check mb-4 d-flex align-items-center gap-2">
+                        <input class="form-check-input mt-0" 
+                               type="checkbox" 
+                               name="remember" 
+                               id="remember" 
+                               value="1" 
+                               {{ old('remember', !empty($rememberedEmail)) ? 'checked' : '' }}
+                               style="cursor: pointer; width: 18px; height: 18px;">
+                        <label class="form-check-label mb-0" for="remember" style="font-size: 14px; color: var(--tinta); cursor: pointer; user-select: none;">
+                            Ingat saya (Simpan info login)
+                        </label>
                     </div>
 
                     <button type="submit" class="btn btn-tk-utama w-100">
