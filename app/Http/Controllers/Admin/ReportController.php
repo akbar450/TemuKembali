@@ -39,12 +39,27 @@ class ReportController extends Controller
         $reports = $query->paginate(15)->withQueryString();
         $categories = Category::ordered()->get();
 
+        $counts = Report::selectRaw("
+            count(*) as total,
+            count(case when status = 'hilang' then 1 end) as hilang,
+            count(case when status = 'ditemukan' then 1 end) as ditemukan,
+            count(case when status = 'dikembalikan' then 1 end) as dikembalikan
+        ")->first();
+
+        $stats = [
+            'total' => (int) ($counts->total ?? 0),
+            'hilang' => (int) ($counts->hilang ?? 0),
+            'ditemukan' => (int) ($counts->ditemukan ?? 0),
+            'dikembalikan' => (int) ($counts->dikembalikan ?? 0),
+        ];
+
         return view('admin.reports.index', [
             'reports' => $reports,
             'categories' => $categories,
             'activeCategory' => $request->input('kategori'),
             'activeStatus' => $request->input('status'),
             'keyword' => $request->input('q'),
+            'stats' => $stats,
         ]);
     }
 

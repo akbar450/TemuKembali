@@ -57,6 +57,30 @@ class AdminTest extends TestCase
         $response->assertDontSee('Ingat saya');
     }
 
+    public function test_admin_melihat_ringkasan_statistik_di_kelola_laporan(): void
+    {
+        Report::create([
+            'code' => 'TK-STAT-TEST',
+            'type' => 'lost',
+            'status' => 'hilang',
+            'item_name' => 'Kunci Motor Honda',
+            'category_id' => $this->category->id,
+            'description' => 'Kunci motor hilang di parkiran',
+            'location' => 'Parkiran Utama',
+            'event_date' => now()->format('Y-m-d'),
+            'reporter_name' => 'Budi',
+            'reporter_contact' => '081234567890',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.reports.index'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Total Laporan');
+        $response->assertSee('Barang Hilang');
+        $response->assertSee('Barang Ditemukan');
+        $response->assertSee('Dikembalikan');
+    }
+
     public function test_login_gagal_menampilkan_pesan_error_umum(): void
     {
         $response = $this->post(route('admin.login.submit'), [

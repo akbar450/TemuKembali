@@ -6,8 +6,48 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 style="font-size: 1.5rem; margin-bottom: 0;">Kelola laporan</h1>
         <span style="font-size: 14px; font-weight: 600; color: var(--tinta-redup);">
-            {{ $reports->total() }} total
+            {{ $reports->total() }} hasil ditampilkan
         </span>
+    </div>
+
+    {{-- Ringkasan Statistik Laporan (Dashboard Cepat) --}}
+    <div class="row g-2 mb-4">
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('admin.reports.index') }}" class="text-decoration-none d-block h-100" style="color: inherit;">
+                <div class="p-3 h-100" style="background: var(--kartu); border: 1.5px solid {{ empty($activeStatus) ? 'var(--biru)' : 'var(--garis)' }}; border-radius: var(--r-tag);">
+                    <div style="font-size: 12px; font-weight: 700; color: var(--tinta-redup); text-transform: uppercase; letter-spacing: 0.5px;">Total Laporan</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; color: var(--tinta); margin-top: 4px;">{{ $stats['total'] }}</div>
+                    <div style="font-size: 12px; color: var(--tinta-redup); margin-top: 2px;">Semua data laporan</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('admin.reports.index', ['status' => 'hilang']) }}" class="text-decoration-none d-block h-100" style="color: inherit;">
+                <div class="p-3 h-100" style="background: var(--kartu); border: 1.5px solid {{ $activeStatus === 'hilang' ? 'var(--tag-hilang)' : 'var(--garis)' }}; border-radius: var(--r-tag);">
+                    <div style="font-size: 12px; font-weight: 700; color: #b7791f; text-transform: uppercase; letter-spacing: 0.5px;">Barang Hilang</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; color: var(--tinta); margin-top: 4px;">{{ $stats['hilang'] }}</div>
+                    <div style="font-size: 12px; color: var(--tinta-redup); margin-top: 2px;">Sedang dicari pemilik</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('admin.reports.index', ['status' => 'ditemukan']) }}" class="text-decoration-none d-block h-100" style="color: inherit;">
+                <div class="p-3 h-100" style="background: var(--kartu); border: 1.5px solid {{ $activeStatus === 'ditemukan' ? 'var(--tag-ditemukan)' : 'var(--garis)' }}; border-radius: var(--r-tag);">
+                    <div style="font-size: 12px; font-weight: 700; color: #276749; text-transform: uppercase; letter-spacing: 0.5px;">Barang Ditemukan</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; color: var(--tinta); margin-top: 4px;">{{ $stats['ditemukan'] }}</div>
+                    <div style="font-size: 12px; color: var(--tinta-redup); margin-top: 2px;">Tersimpan di pos satpam</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('admin.reports.index', ['status' => 'dikembalikan']) }}" class="text-decoration-none d-block h-100" style="color: inherit;">
+                <div class="p-3 h-100" style="background: var(--kartu); border: 1.5px solid {{ $activeStatus === 'dikembalikan' ? 'var(--biru)' : 'var(--garis)' }}; border-radius: var(--r-tag);">
+                    <div style="font-size: 12px; font-weight: 700; color: var(--biru); text-transform: uppercase; letter-spacing: 0.5px;">Dikembalikan</div>
+                    <div style="font-size: 1.75rem; font-weight: 800; color: var(--tinta); margin-top: 4px;">{{ $stats['dikembalikan'] }}</div>
+                    <div style="font-size: 12px; color: var(--tinta-redup); margin-top: 2px;">Selesai diserahkan</div>
+                </div>
+            </a>
+        </div>
     </div>
 
     {{-- Filter & Pencarian --}}
