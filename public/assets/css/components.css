@@ -74,6 +74,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btn-header-lapor:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.96);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-header-lapor:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-header-lapor--hilang {
@@ -135,12 +146,20 @@
   text-decoration: none;
   overflow: visible;
   min-height: 110px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
 .tag:hover {
   text-decoration: none;
   color: var(--tinta);
   border-color: var(--garis-tegas);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(30, 43, 51, 0.08);
+}
+
+.tag:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 43, 51, 0.05);
 }
 
 .tag__stub {
@@ -279,12 +298,19 @@
   text-decoration: none;
   white-space: nowrap;
   min-height: 36px;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
 }
 
 .chip-kategori:hover {
   border-color: var(--tinta);
   color: var(--tinta);
   text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.chip-kategori:active {
+  transform: translateY(0);
 }
 
 .chip-kategori.active {
@@ -442,6 +468,13 @@
   font-weight: 700;
   font-size: 15px;
   color: var(--tinta);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.jenis-laporan-label:hover {
+  transform: translateY(-2px);
+  border-color: var(--tinta);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .jenis-laporan-radio {
@@ -633,6 +666,13 @@ dialog.tk-dialog::backdrop {
   border: 1px solid var(--garis);
   border-radius: var(--r-tag);
   padding: 18px 16px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.langkah-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(30, 43, 51, 0.06);
+  border-color: var(--garis-tegas);
 }
 
 .langkah-nomor {
@@ -654,6 +694,48 @@ dialog.tk-dialog::backdrop {
   font-size: 14px;
   color: var(--tinta-redup);
   margin-bottom: 0;
+}
+
+/* Animasi & Interaksi Modern */
+.admin-stat-card {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(30, 43, 51, 0.08);
+}
+
+.admin-stat-card:active {
+  transform: translateY(-1px);
+}
+
+@keyframes tkFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tag,
+.langkah-card,
+.admin-stat-card,
+.form-box,
+.kotak-petunjuk {
+  animation: tkFadeInUp 0.3s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Cetak Lembar Bukti Laporan (PDF / Print ke Satpam) */

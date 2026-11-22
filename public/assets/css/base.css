@@ -26,7 +26,7 @@ a:hover {
   border-radius: var(--r-kontrol);
   border: 1.5px solid transparent;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.15s ease, border-color 0.15s ease;
   box-shadow: none !important;
   text-align: center;
 }
@@ -43,12 +43,14 @@ a:hover {
   background-color: var(--biru-tua) !important;
   border-color: var(--biru-tua) !important;
   color: var(--kartu) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(42, 111, 134, 0.25) !important;
 }
 
 .btn-tk-utama:active,
 .btn-primary:active {
   background-color: var(--biru-tua) !important;
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.98);
 }
 
 .btn-tk-sekunder,
@@ -57,6 +59,22 @@ a:hover {
   background-color: transparent !important;
   color: var(--biru) !important;
   border: 1.5px solid var(--biru) !important;
+}
+
+.btn-tk-sekunder:hover,
+.btn-secondary:hover,
+.btn-outline-primary:hover {
+  background-color: rgba(42, 111, 134, 0.05) !important;
+  color: var(--biru-tua) !important;
+  border-color: var(--biru-tua) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(42, 111, 134, 0.12) !important;
+}
+
+.btn-tk-sekunder:active,
+.btn-secondary:active,
+.btn-outline-primary:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .btn-tk-sekunder:hover,
@@ -122,6 +140,7 @@ a:hover {
   border-radius: var(--r-kontrol);
   box-shadow: none !important;
   box-sizing: border-box;
+  transition: border-color 0.18s ease, outline-color 0.18s ease;
 }
 
 textarea.form-control {
