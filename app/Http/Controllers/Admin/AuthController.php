@@ -13,15 +13,13 @@ class AuthController extends Controller
     /**
      * Tampilkan form login admin
      */
-    public function showLoginForm(Request $request): View|RedirectResponse
+    public function showLoginForm(): View|RedirectResponse
     {
         if (Auth::check()) {
             return redirect()->route('admin.reports.index');
         }
 
-        $rememberedEmail = $request->cookie('remember_admin_email');
-
-        return view('admin.login', compact('rememberedEmail'));
+        return view('admin.login');
     }
 
     /**
@@ -38,23 +36,14 @@ class AuthController extends Controller
             'password.required' => 'Password harus diisi.',
         ]);
 
-        $remember = $request->boolean('remember');
-
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            if ($remember) {
-                // Simpan email ke cookie selama 30 hari (43200 menit)
-                cookie()->queue('remember_admin_email', $credentials['email'], 43200);
-            } else {
-                cookie()->queue(cookie()->forget('remember_admin_email'));
-            }
 
             return redirect()->intended(route('admin.reports.index'));
         }
 
         // Pesan error umum sesuai PRD Section 6.6
-        return back()->withInput($request->only('email', 'remember'))->withErrors([
+        return back()->withInput($request->only('email'))->withErrors([
             'email' => 'Email atau password salah.',
         ]);
     }

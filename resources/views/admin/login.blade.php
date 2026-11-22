@@ -17,7 +17,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.login.submit') }}" method="POST" data-prevent-double-submit>
+                <form action="{{ route('admin.login.submit') }}" method="POST" autocomplete="on">
                     @csrf
 
                     <div class="form-group mb-3">
@@ -25,10 +25,10 @@
                         <input type="email" 
                                id="email" 
                                name="email" 
-                               value="{{ old('email', $rememberedEmail ?? '') }}" 
+                               value="{{ old('email') }}" 
                                class="form-control @error('email') is-invalid @enderror" 
                                required 
-                               {{ empty($rememberedEmail) ? 'autofocus' : '' }} 
+                               autofocus 
                                autocomplete="username">
                     </div>
 
@@ -39,21 +39,19 @@
                                name="password" 
                                class="form-control" 
                                required 
-                               {{ !empty($rememberedEmail) ? 'autofocus' : '' }} 
                                autocomplete="current-password">
                     </div>
 
-                    <div class="form-check mb-4 d-flex align-items-center gap-2">
-                        <input class="form-check-input mt-0" 
-                               type="checkbox" 
-                               name="remember" 
-                               id="remember" 
-                               value="1" 
-                               {{ old('remember', !empty($rememberedEmail)) ? 'checked' : '' }}
-                               style="cursor: pointer; width: 18px; height: 18px;">
-                        <label class="form-check-label mb-0" for="remember" style="font-size: 14px; color: var(--tinta); cursor: pointer; user-select: none;">
-                            Ingat saya (Simpan info login)
-                        </label>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="form-check d-flex align-items-center gap-2 m-0">
+                            <input class="form-check-input mt-0" 
+                                   type="checkbox" 
+                                   id="togglePassword" 
+                                   style="cursor: pointer; width: 16px; height: 16px;">
+                            <label class="form-check-label" for="togglePassword" style="font-size: 13.5px; color: var(--tinta-redup); cursor: pointer; user-select: none;">
+                                Lihat password
+                            </label>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-tk-utama w-100">
@@ -64,4 +62,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('togglePassword');
+        const passInput = document.getElementById('password');
+        if (toggleBtn && passInput) {
+            toggleBtn.addEventListener('change', function () {
+                passInput.type = this.checked ? 'text' : 'password';
+            });
+        }
+    });
+</script>
+@endpush
 

@@ -46,27 +46,15 @@ class AdminTest extends TestCase
         $this->assertAuthenticatedAs($this->admin);
     }
 
-    public function test_admin_dapat_login_dengan_ingat_saya_dan_menyimpan_cookie(): void
+    public function test_form_login_mendukung_autofill_browser(): void
     {
-        $response = $this->post(route('admin.login.submit'), [
-            'email' => 'admin@kampus.ac.id',
-            'password' => 'admin12345',
-            'remember' => '1',
-        ]);
-
-        $response->assertRedirect(route('admin.reports.index'));
-        $this->assertAuthenticatedAs($this->admin);
-        $response->assertCookie('remember_admin_email', 'admin@kampus.ac.id');
-    }
-
-    public function test_form_login_menampilkan_email_tersimpan(): void
-    {
-        $response = $this->withCookie('remember_admin_email', 'admin@kampus.ac.id')
-            ->get(route('admin.login'));
+        $response = $this->get(route('admin.login'));
 
         $response->assertStatus(200);
-        $response->assertSee('admin@kampus.ac.id');
-        $response->assertSee('checked');
+        $response->assertSee('autocomplete="username"', false);
+        $response->assertSee('autocomplete="current-password"', false);
+        $response->assertSee('Lihat password');
+        $response->assertDontSee('Ingat saya');
     }
 
     public function test_login_gagal_menampilkan_pesan_error_umum(): void
