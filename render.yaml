@@ -7,6 +7,7 @@ services:
     dockerfilePath: Dockerfile
     healthCheckPath: /up
     envVars:
+      - fromGroup: temukembali-env
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
