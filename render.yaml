@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: temukembali-app
+    name: TemuKembali
     env: docker
     plan: free
     region: singapore
