@@ -33,6 +33,39 @@
             <h1 style="font-size: 1.35rem; margin-bottom: 0;">{{ $report->item_name }}</h1>
         </div>
 
+        {{-- Bagian Rincian Barang (Read-Only) --}}
+        <div style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag); padding: 18px 20px; margin-bottom: 24px;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Rincian barang</h2>
+            <div class="tanda-terima-list p-0 border-0 mb-0">
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Jenis laporan</span>
+                    <span class="tanda-terima-value font-weight-bold" style="font-weight: 600;">
+                        {{ $report->status === 'hilang' ? 'Barang Hilang' : 'Barang Ditemukan' }}
+                    </span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Nama barang</span>
+                    <span class="tanda-terima-value font-weight-bold" style="font-weight: 700;">{{ $report->item_name }}</span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Kategori</span>
+                    <span class="tanda-terima-value">{{ $report->category->name ?? 'Lainnya' }}</span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Lokasi kejadian</span>
+                    <span class="tanda-terima-value">{{ $report->location }}</span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Tanggal kejadian</span>
+                    <span class="tanda-terima-value">{{ $report->event_date ? $report->event_date->translatedFormat('l, j F Y') : '-' }}</span>
+                </div>
+                <div class="tanda-terima-row">
+                    <span class="tanda-terima-label">Ciri-ciri barang</span>
+                    <span class="tanda-terima-value" style="white-space: pre-line;">{{ $report->description }}</span>
+                </div>
+            </div>
+        </div>
+
         {{-- Bagian Pelapor (Hanya Terlihat Oleh Admin Sesuai PRD) --}}
         <div style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag); padding: 18px 20px; margin-bottom: 24px;">
             <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Informasi pelapor & verifikasi</h2>
@@ -131,151 +164,7 @@
             @endif
         </div>
 
-        {{-- Bagian Ubah Isi Laporan (Perbaikan Data) --}}
-        <div style="background: var(--kartu); border: 1px solid var(--garis); border-radius: var(--r-tag); padding: 18px 20px; margin-bottom: 32px;">
-            <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Ubah isi laporan</h2>
 
-            <form action="{{ route('admin.reports.update', $report->code) }}" method="POST" data-prevent-double-submit>
-                @csrf
-                @method('PUT')
-
-                <div class="form-group">
-                    <label for="item_name" class="form-label">Nama barang <span class="wajib">(wajib)</span></label>
-                    <input type="text" 
-                           id="item_name" 
-                           name="item_name" 
-                           value="{{ old('item_name', $report->item_name) }}" 
-                           class="form-control @error('item_name') is-invalid @enderror" 
-                           required>
-                    @error('item_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="category_id" class="form-label">Kategori <span class="wajib">(wajib)</span></label>
-                    <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
-                        @foreach ($categories as $cat)
-                            <option value="{{ $cat->id }}" {{ old('category_id', $report->category_id) == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="description" class="form-label">Ciri-ciri barang <span class="wajib">(wajib)</span></label>
-                    <textarea id="description" 
-                              name="description" 
-                              class="form-control @error('description') is-invalid @enderror" 
-                              rows="4" 
-                              required>{{ old('description', $report->description) }}</textarea>
-                    @error('description')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="secret_note" class="form-label">Ciri rahasia / verifikasi <span class="wajib">(hanya admin)</span></label>
-                    <textarea id="secret_note" 
-                              name="secret_note" 
-                              class="form-control @error('secret_note') is-invalid @enderror" 
-                              rows="2">{{ old('secret_note', $report->secret_note) }}</textarea>
-                    @error('secret_note')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="location" class="form-label">Lokasi <span class="wajib">(wajib)</span></label>
-                    <input type="text" 
-                           id="location" 
-                           name="location" 
-                           value="{{ old('location', $report->location) }}" 
-                           class="form-control @error('location') is-invalid @enderror" 
-                           required>
-                    @error('location')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="event_date" class="form-label">Tanggal kejadian <span class="wajib">(wajib)</span></label>
-                    <input type="date" 
-                           id="event_date" 
-                           name="event_date" 
-                           value="{{ old('event_date', $report->event_date ? $report->event_date->format('Y-m-d') : '') }}" 
-                           max="{{ date('Y-m-d') }}" 
-                           class="form-control @error('event_date') is-invalid @enderror" 
-                           required>
-                    @error('event_date')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="reporter_name" class="form-label">Nama pelapor <span class="wajib">(wajib)</span></label>
-                    <input type="text" 
-                           id="reporter_name" 
-                           name="reporter_name" 
-                           value="{{ old('reporter_name', $report->reporter_name) }}" 
-                           class="form-control @error('reporter_name') is-invalid @enderror" 
-                           required>
-                    @error('reporter_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="reporter_role" class="form-label">Peran pelapor</label>
-                    <select id="reporter_role" 
-                            name="reporter_role" 
-                            class="form-select @error('reporter_role') is-invalid @enderror">
-                        <option value="">Belum ditentukan</option>
-                        <option value="mahasiswa" {{ old('reporter_role', $report->reporter_role) === 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-                        <option value="dosen" {{ old('reporter_role', $report->reporter_role) === 'dosen' ? 'selected' : '' }}>Dosen</option>
-                        <option value="staf" {{ old('reporter_role', $report->reporter_role) === 'staf' ? 'selected' : '' }}>Staf</option>
-                        <option value="tamu" {{ old('reporter_role', $report->reporter_role) === 'tamu' ? 'selected' : '' }}>Tamu</option>
-                    </select>
-                    @error('reporter_role')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="reporter_id_number" class="form-label">NIM / NIK</label>
-                    <input type="text" 
-                           id="reporter_id_number" 
-                           name="reporter_id_number" 
-                           value="{{ old('reporter_id_number', $report->reporter_id_number) }}" 
-                           class="form-control @error('reporter_id_number') is-invalid @enderror" 
-                           placeholder="NIM atau NIK pelapor">
-                    @error('reporter_id_number')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group mb-4">
-                    <label for="reporter_contact" class="form-label">Kontak pelapor <span class="wajib">(wajib)</span></label>
-                    <input type="text" 
-                           id="reporter_contact" 
-                           name="reporter_contact" 
-                           value="{{ old('reporter_contact', $report->reporter_contact) }}" 
-                           class="form-control @error('reporter_contact') is-invalid @enderror" 
-                           required>
-                    @error('reporter_contact')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-tk-utama">
-                    Simpan perubahan
-                </button>
-            </form>
-        </div>
 
         {{-- Zona Bahaya: Hapus Laporan (Section 6.8 & 5.7) --}}
         <div style="border-top: 1px solid var(--garis); padding-top: 24px; margin-bottom: 40px;">

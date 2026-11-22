@@ -79,12 +79,16 @@ class AdminTest extends TestCase
         $response = $this->actingAs($this->admin)->get(route('admin.reports.show', $report->code));
 
         $response->assertStatus(200);
+        $response->assertSee('Rincian barang');
+        $response->assertSee('Tablet iPad Mini');
+        $response->assertSee('Gedung Rektorat Lt 3');
         $response->assertSee('Dosen Pembimbing');
         $response->assertSee('Dosen');
         $response->assertSee('197501012005011001');
         $response->assertSee('081122334455');
         $response->assertSee('7412');
         $response->assertSee('stiker apel digigit');
+        $response->assertDontSee('Ubah isi laporan');
     }
 
     public function test_admin_dapat_mengubah_status_dari_hilang_ke_ditemukan(): void
