@@ -46,7 +46,7 @@
 
     @yield('bottom_bar')
 
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}?v=2"></script>
     @stack('scripts')
 </body>
 </html>

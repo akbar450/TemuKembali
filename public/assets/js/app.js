@@ -86,5 +86,22 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // 5. Scroll otomatis ke chip kategori aktif (terutama di layar mobile)
+  function scrollToActiveChip() {
+    const chipContainers = document.querySelectorAll('.chip-scroll');
+    chipContainers.forEach(function (container) {
+      const activeChip = container.querySelector('.chip-kategori.active');
+      if (activeChip) {
+        const containerRect = container.getBoundingClientRect();
+        const chipRect = activeChip.getBoundingClientRect();
+        const offset = (chipRect.left - containerRect.left) + container.scrollLeft;
+        container.scrollLeft = offset - (containerRect.width / 2) + (chipRect.width / 2);
+      }
+    });
+  }
+
+  scrollToActiveChip();
+  requestAnimationFrame(scrollToActiveChip);
 });
 
