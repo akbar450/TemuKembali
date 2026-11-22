@@ -164,9 +164,10 @@ class ReportController extends Controller
      */
     public function success(string $code): View
     {
-        $report = Report::where('code', $code)->firstOrFail();
+        $report = Report::with('category')->where('code', $code)->firstOrFail();
+        $campusPostLocation = config('app.campus_post_location');
 
-        return view('publik.success', compact('report'));
+        return view('publik.success', compact('report', 'campusPostLocation'));
     }
 }
 

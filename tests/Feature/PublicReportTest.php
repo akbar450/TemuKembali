@@ -284,5 +284,36 @@ class PublicReportTest extends TestCase
             'reporter_contact',
         ]);
     }
+
+    public function test_pelapor_dapat_melihat_bukti_dan_tombol_cetak_pdf(): void
+    {
+        $report = Report::create([
+            'code' => 'TK-TESTPDF',
+            'claim_pin' => '9876',
+            'type' => 'lost',
+            'status' => 'hilang',
+            'item_name' => 'Kunci Motor Vario',
+            'category_id' => $this->category->id,
+            'description' => 'Gantungan kunci warna merah',
+            'secret_note' => 'Ada goresan kecil di gagang',
+            'location' => 'Parkiran Belakang',
+            'event_date' => now()->format('Y-m-d'),
+            'reporter_name' => 'Budi Santoso',
+            'reporter_role' => 'mahasiswa',
+            'reporter_id_number' => '2201010099',
+            'reporter_contact' => '081299998888',
+        ]);
+
+        $response = $this->get(route('report.success', $report->code));
+
+        $response->assertStatus(200);
+        $response->assertSee('TK-TESTPDF');
+        $response->assertSee('9876');
+        $response->assertSee('Unduh / Cetak Bukti (PDF)');
+        $response->assertSee('BUKTI RESMI PELAPORAN');
+        $response->assertSee('Budi Santoso');
+        $response->assertSee('2201010099');
+        $response->assertSee('Ada goresan kecil di gagang');
+    }
 }
 

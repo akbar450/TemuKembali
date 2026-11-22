@@ -656,3 +656,96 @@ dialog.tk-dialog::backdrop {
   margin-bottom: 0;
 }
 
+/* Cetak Lembar Bukti Laporan (PDF / Print ke Satpam) */
+.lembar-cetak-pdf {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.2cm;
+  }
+
+  /* Sembunyikan elemen navigasi dan tombol web */
+  header.tk-header,
+  footer.tk-footer,
+  .d-print-none,
+  .notifikasi,
+  .btn,
+  a {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-family: Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main.tk-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .lembar-cetak-pdf {
+    display: block !important;
+    width: 100% !important;
+    max-width: 720px !important;
+    margin: 0 auto !important;
+    padding: 16px !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  .lembar-cetak-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .lembar-cetak-badge {
+    border: 2px solid #222;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 10pt;
+    letter-spacing: 0.5px;
+  }
+
+  .lembar-cetak-box-kode {
+    display: flex;
+    border: 2px solid #222;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fafafa;
+  }
+
+  .lembar-cetak-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 9.5pt;
+  }
+
+  .lembar-cetak-table th,
+  .lembar-cetak-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    vertical-align: top;
+  }
+
+  .lembar-cetak-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 24px;
+    padding-top: 12px;
+  }
+}
+
